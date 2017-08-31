@@ -4,7 +4,7 @@
   import VMasker from 'vanilla-masker'
 
   export default {
-    props: ['placeholder', 'value', 'mask'],
+    props: ['placeholder', 'value', 'mask', 'type'],
     data: function () {
       return {
         valor: 0
@@ -23,6 +23,9 @@
       },
       update: function () {
         this.$emit('change', this.valor)
+      },
+      onBlur: function () {
+        self.$emit('blur')
       }
     },
     render: function (createElement) {
@@ -31,10 +34,15 @@
         domProps: {
           value: self.value,
           placeholder: this.placeholder,
-          type: 'text'
+          type: this.type || 'text'
         },
         on: {
           keyup: function (ev) {
+            console.log(ev)
+            if(ev.keyCode === 13){
+              self.$emit('enter')
+            }
+            
             var isCharacter = isCharacterKeyPress(ev)
             var isAllowedKey = allowedKeys.indexOf(ev.keyCode) > -1
             if(isAllowedKey) return;
@@ -45,6 +53,9 @@
             ev.target.value = self.applyMask(ev.target.value)
             self.valor = ev.target.value
             self.update()
+          },
+          blur: function () {
+            self.onBlur()
           }
         }
       })

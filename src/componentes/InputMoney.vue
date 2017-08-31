@@ -9,6 +9,9 @@
       applyMask: function (value) {
         return VMasker.toMoney(value, {precision: 2, separator: ',', delimiter: '.', zeroCents: false})
       },
+      onBlur: function () {
+        this.$emit('blur', {valueMask: this.valor, value: this.removeMask(this.valor)})
+      },
       update: function () {
         this.$emit('change', {valueMask: this.valor, value: this.removeMask(this.valor)})
       },

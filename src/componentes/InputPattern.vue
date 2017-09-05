@@ -25,7 +25,7 @@
         this.$emit('change', this.valor)
       },
       onBlur: function () {
-        self.$emit('blur')
+        this.$emit('blur')
       }
     },
     render: function (createElement) {
@@ -38,7 +38,6 @@
         },
         on: {
           keyup: function (ev) {
-            console.log(ev)
             if(ev.keyCode === 13){
               self.$emit('enter')
             }
